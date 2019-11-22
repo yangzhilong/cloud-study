@@ -1,2 +1,2 @@
-#  Api Common
-所有的api项目都应该依赖该项目，该项目管理了api里公共用到的类
+# cloud-api-parent
+所有的api项目必须以此POM作为父POM
