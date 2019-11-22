@@ -1,0 +1,2 @@
+#  Service Common
+所有的service项目都应该依赖该项目，该项目管理了service可能用到的Util类
