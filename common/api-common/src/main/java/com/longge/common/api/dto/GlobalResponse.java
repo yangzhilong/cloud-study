@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.longge.common.api.constant.BaseConstant;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class GlobalResponse<T> implements Serializable{
     private static final long serialVersionUID = 8753813726294333866L;
     private Boolean success;
