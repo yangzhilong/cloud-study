@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- fix eclispse pom error info -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 
@@ -23,6 +24,8 @@
 		<spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
 
 		<swagger.version>2.9.2</swagger.version>
+		<dozer.version>5.5.1</dozer.version>
+		<guava.version>28.1-jre</guava.version>
 	</properties>
 
 	<modules>
