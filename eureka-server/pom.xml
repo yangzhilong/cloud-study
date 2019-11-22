@@ -4,11 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.longge</groupId>
-		<artifactId>cloud-study-parent</artifactId>
+		<artifactId>cloud-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>eureka-server</artifactId>
-	<version>1.0.0</version>
 
 	<dependencies>
 		<dependency>
