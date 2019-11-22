@@ -1,13 +1,13 @@
 package com.longge.common.util;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.connection.DataType;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 
@@ -23,32 +23,70 @@ public class RedisUtils {
         redisTemplate = rt;
     }
 
-    public RedisUtils() {
-        super();
-    }
+    private RedisUtils() {}
 
     /**
      * ###################################################################### common command  #################################################################################
      */
 
-    public static Long dbsize() {
-        return redisTemplate.execute((RedisConnection connection) -> connection.dbSize(), true);
+    public static Boolean hasKey(String key) {
+        return redisTemplate.hasKey(key);
     }
-
-    public static Properties info() {
-        return redisTemplate.execute((RedisConnection connection) -> connection.info(), true);
+    
+    public static Boolean expire(String key, long timeout) {
+        return expire(key, timeout, TimeUnit.SECONDS);
     }
-
-    public static Properties info(String section) {
-        return redisTemplate.execute((RedisConnection connection) -> connection.info(section), true);
+    
+    public static Boolean expire(String key, long timeout, TimeUnit unit) {
+        return redisTemplate.expire(key, timeout, unit);
     }
-
-    public static Long ttl(String key) {
-        byte[] bytes = key.getBytes();
-        return redisTemplate.execute((RedisConnection connection) -> connection.ttl(bytes), true);
+    
+    public static Boolean expireAt(String key, Date date) {
+        return redisTemplate.expireAt(key, date);
     }
-
-
+    
+    public static Long getExpire(String key) {
+        return redisTemplate.getExpire(key);
+    }
+    
+    public static Long getExpire(String key, TimeUnit timeUnit) {
+        return redisTemplate.getExpire(key, timeUnit);
+    }
+    
+    public static Boolean delete(String key) {
+        return redisTemplate.delete(key);
+    }
+    
+    public static Long deleteBatch(Collection<String> keys) {
+        return redisTemplate.delete(keys);
+    }
+    
+    /**
+     * 重命名key的名字到newKey，如果已经存在则覆盖
+     * @param oldKey
+     * @param newKey
+     */
+    public static void rename(String oldKey,String newKey) {
+        redisTemplate.rename(oldKey, newKey);
+    }
+    
+    /**
+     * 如果newKey不存在则重命名
+     * @param oldKey
+     * @param newKey
+     * @return
+     */
+    public static Boolean renameIfAbsent(String oldKey,String newKey) {
+        return redisTemplate.renameIfAbsent(oldKey, newKey);
+    }
+    
+    public static DataType type(String key) {
+        return redisTemplate.type(key);
+    }
+    
+    public static String randomKey() {
+        return redisTemplate.randomKey();
+    }
     /**
      * ###################################################################### string  #################################################################################
      */
@@ -79,11 +117,7 @@ public class RedisUtils {
      * @desc 为给定 key 设置过期时间expiredTime
      */
     public static void setEx(String key, String value, long expiredTime, TimeUnit expiredTimeUnit) {
-        if (expiredTime <= 0 || expiredTimeUnit == null) {
-            redisTemplate.opsForValue().set(key, value);
-        } else {
-            redisTemplate.opsForValue().set(key, value, expiredTime, expiredTimeUnit);
-        }
+        redisTemplate.opsForValue().set(key, value, expiredTime, expiredTimeUnit);
     }
 
     /**
@@ -99,27 +133,10 @@ public class RedisUtils {
     /**
      * @param key
      * @return
-     * @desc 检查给定 key 是否存在
-     */
-    public static Boolean exist(String key) {
-        return redisTemplate.hasKey(key);
-    }
-
-    /**
-     * @param key
-     * @desc 在 key 存在时删除 key
-     */
-    public static void delete(String key) {
-        redisTemplate.delete(key);
-    }
-
-    /**
-     * @param key
-     * @return
      * @desc 将 key 中储存的数字值增1
      */
-    public static Long autoIncrement(String key) {
-        return autoIncrementByCount(key, -1);
+    public static Long increment(String key) {
+        return incrementByCount(key, 1);
     }
 
     /**
@@ -128,36 +145,45 @@ public class RedisUtils {
      * @return
      * @desc 将 key 中储存的数字值增count
      */
-    public static Long autoIncrementByCount(String key, long count) {
-        if (count == -1) {
-            return redisTemplate.opsForValue().increment(key, 1);
-        }
+    public static Long incrementByCount(String key, long count) {
         return redisTemplate.opsForValue().increment(key, count);
+    }
+    
+    /**
+     * @param key
+     * @return
+     * @desc 将 key 中储存的数字值减1
+     */
+    public static Long decrement(String key) {
+        return decrementByCount(key, 1);
     }
 
     /**
      * @param key
+     * @param count
      * @return
-     * @desc 查询redis类型
+     * @desc 将 key 中储存的数字值减count
      */
-    public static DataType type(String key) {
-        return redisTemplate.type(key);
+    public static Long decrementByCount(String key, long count) {
+        return redisTemplate.opsForValue().decrement(key, count);
     }
-
+    
     /**
+     * 批量获取元素
+     * @param keys
      * @return
-     * @desc 返回一个随机的key
      */
-    public static String randomKey() {
-        return redisTemplate.randomKey();
+    public static List<String> mulitiGet(Collection<String> keys) {
+        return redisTemplate.opsForValue().multiGet(keys);
     }
-
-    public static void expire(String key, long expiredTime, TimeUnit expiredTimeUnit) {
-        if (expiredTime > 0 && expiredTimeUnit != null) {
-            redisTemplate.expire(key, expiredTime, expiredTimeUnit);
-        }
+    
+    /**
+     * 批量设置值
+     * @param map
+     */
+    public static void mulitiSet(Map<String, String> map) {
+        redisTemplate.opsForValue().multiSet(map);
     }
-
 
     /**
      * ###################################################################### list  #################################################################################

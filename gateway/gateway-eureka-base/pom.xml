@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.longge</groupId>
         <artifactId>cloud-webflux-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>gateway-eureka-base</artifactId>
 
