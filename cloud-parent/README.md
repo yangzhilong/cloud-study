@@ -9,9 +9,11 @@
 ```
 非业务组件的服务可以将此POM作为父POM进行依赖，例如： Eureka、Zipkin等
 
-##  下设2个子模块
+##  下设3个子模块
 
 ### 1、cloud-api-parent
 	所有的api项目必须以此POM作为父POM
-### 2、cloud-service-parent
-	所有业务Service必须以此POM作为父POM
+### 2、cloud-web-parent
+	所有业务SpringMVC Service必须以此POM作为父POM
+### 3、cloud-webflux-parent
+	所有业务SpringFlux Service必须以此POM作为父POM

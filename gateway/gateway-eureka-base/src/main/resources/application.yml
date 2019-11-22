@@ -10,6 +10,10 @@ eureka:
 server:
   port: 8100
 spring:
+  mvc:
+    servlet:
+      #spring mvc servlet disable lazy loading
+      load-on-startup: 1
   profiles:    active:    - local
   application:
     name: gateway
@@ -52,3 +56,8 @@ okhttp:
   max-idle: 100
   read-timeout-ms: 500
   write-timeout-ms: 500
+  
+# ribbon lazy loading disable
+ribbon:
+  eager-load:
+    enabled: true

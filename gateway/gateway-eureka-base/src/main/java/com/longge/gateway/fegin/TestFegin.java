@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author roger yang
  * @date 9/18/2019
  */
-@FeignClient(value = "server-a")
+@FeignClient(value = "producer-eureka-base")
 public interface TestFegin {
     
     @GetMapping("/test")

@@ -22,7 +22,7 @@ public class TestService {
 	private TestFegin testFegin;
 	
 	public String call(ServerWebExchange exchange) {
-		ServiceInstance instance = loadBalancerClient.choose("server-a");
+		ServiceInstance instance = loadBalancerClient.choose("producer-eureka-base");
 	    if(Objects.isNull(instance)) {
 	        throw new NullPointerException("No instances are available");
 	    }
