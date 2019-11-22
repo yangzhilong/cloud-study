@@ -24,3 +24,18 @@
 ```
  eureka的server服务，有单机配置和集群配置
 ```
+
+### 4、gateway
+```
+Gateway的各种集成
+```
+
+### 5、producer-service
+```
+服务的提供者的多个版本
+```
+
+### 5、consumer-service
+```
+服务的消费者的多个版本
+```
