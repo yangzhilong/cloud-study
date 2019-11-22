@@ -15,7 +15,6 @@
 	   <dependency>
            <groupId>com.longge</groupId>
            <artifactId>service-common</artifactId>
-           <version>${service-common.version}</version>
        </dependency>
 	
 		<!-- web -->
@@ -27,7 +26,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        
         
 		<!-- test -->
 		<dependency>
@@ -44,7 +42,6 @@
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
-			<version>${dozer.version}</version>
 		</dependency>
 	</dependencies>
 

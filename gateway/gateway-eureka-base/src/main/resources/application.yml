@@ -1,0 +1,54 @@
+eureka:
+  client:
+    registry-fetch-interval-seconds: 10
+    serviceUrl:
+      defaultZone: http://eureka:1234@localhost:8000/eureka/
+  instance:
+    lease-expiration-duration-in-seconds: 12
+    lease-renewal-interval-in-seconds: 10
+    prefer-ip-address: true
+server:
+  port: 8100
+spring:
+  profiles:    active:    - local
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:        cors-configurations:          '[/**]': 
+            # 允许携带认证信息
+            # 允许跨域的源(网站域名/ip)，设置*为全部
+            # 允许跨域请求里的head字段，设置*为全部
+            # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+            # 跨域允许的有效期
+            allow-credentials: true            allowed-origins: 
+            - "http://localhost:13009"
+            - "http://localhost:13010"
+            allowed-headers: "*"
+            allowed-methods: 
+            - OPTIONS
+            - GET
+            - POST
+            max-age: 3600
+            # 允许response的head信息
+            # 默认仅允许如下6个：
+            #     Cache-Control
+            #     Content-Language
+            #     Content-Type
+            #     Expires
+            #     Last-Modified
+            #     Pragma
+            #exposed-headers:
+      routes:
+      - id: producer-eureka-base
+        uri: lb://producer-eureka-base
+        predicates:
+        - Path=/api/**
+        filters:
+        - StripPrefix=1
+okhttp:
+  connect-timeout-ms: 500
+  keep-alive-duration-sec: 5000
+  max-idle: 100
+  read-timeout-ms: 500
+  write-timeout-ms: 500
