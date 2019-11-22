@@ -1,22 +1,9 @@
-# bigfile-service
+# 我的SpingCloud学习笔记
 
-This project is based on springboot development and uses components and technologies such as redis, s3, webflux, sentinel and redission.
+## 项目模块：
+### cloud-parent：
+#### 项目维护SpringBoot和SpringCloud的版本
+#### 项目维护公共依赖
 
-Technical features:
-
-1. support documents are divided into fragments
-
-2. Execute the second file when the uploaded file is uploaded again.
-
-3. multiple people upload the same file at the same time can be multi-threaded concurrently uploading, speeding up the uploading of large files.
-
-4. Spring webflux replaced Spring mvc
-
-5. Sentinel is used for current limiting
-
-Sentinel with nacos can see: https://github.com/yangzhilong/nacos-client
-
-# how to use?
-download project, run BigfileServiceApplication's main method or mvn spring-boot:run
-
-Visit the page: http://127.0.0.1:10010/index.html
+### eureka-server
+#### eureka的server服务，有单机配置和集群配置
