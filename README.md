@@ -1,9 +1,13 @@
 # 我的SpingCloud学习笔记
 
 ## 项目模块：
-### cloud-parent：
-#### 项目维护SpringBoot和SpringCloud的版本
-#### 项目维护公共依赖
+### 1、cloud-parent：
+··· 
+ 项目维护SpringBoot和SpringCloud的版本
+ 项目维护公共依赖
+···
 
-### eureka-server
-#### eureka的server服务，有单机配置和集群配置
+### 2、eureka-server
+ ···
+ eureka的server服务，有单机配置和集群配置
+···
