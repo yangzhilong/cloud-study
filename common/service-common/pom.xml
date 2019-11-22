@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.longge</groupId>
 			<artifactId>api-common</artifactId>
-			<version>${project.version}</version>
+			<version>${api-common.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

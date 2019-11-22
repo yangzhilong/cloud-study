@@ -22,6 +22,9 @@
 
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
+		
+		<api-common.version>1.0.0</api-common.version>
+		<service-common.version>1.0.0</service-common.version>
 
 		<swagger.version>2.9.2</swagger.version>
 		<dozer.version>5.5.1</dozer.version>

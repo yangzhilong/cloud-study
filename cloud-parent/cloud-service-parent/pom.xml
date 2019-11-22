@@ -12,6 +12,12 @@
 	<packaging>pom</packaging>
 
 	<dependencies>
+	   <dependency>
+           <groupId>com.longge</groupId>
+           <artifactId>service-common</artifactId>
+           <version>${service-common.version}</version>
+       </dependency>
+	
 		<!-- web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
