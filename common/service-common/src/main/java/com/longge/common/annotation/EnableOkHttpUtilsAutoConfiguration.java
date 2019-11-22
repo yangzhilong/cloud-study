@@ -1,4 +1,4 @@
- package com.longge.common.service.annotation;
+ package com.longge.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-import com.longge.common.service.configuration.OkHttpUtilsConfiguration;
+import com.longge.common.configuration.OkHttpUtilsConfiguration;
 
 /**
  * @author roger yang

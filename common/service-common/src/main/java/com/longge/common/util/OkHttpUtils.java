@@ -1,4 +1,4 @@
-package com.longge.common.service.util;
+package com.longge.common.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -1,4 +1,4 @@
- package com.longge.common.service.configuration;
+ package com.longge.common.configuration;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import com.longge.common.service.configuration.OkHttpUtilsConfiguration.OkHttpConfig;
-import com.longge.common.service.util.OkHttpUtils;
+import com.longge.common.configuration.OkHttpUtilsConfiguration.OkHttpConfig;
+import com.longge.common.util.OkHttpUtils;
 
 import lombok.Getter;
 import lombok.Setter;

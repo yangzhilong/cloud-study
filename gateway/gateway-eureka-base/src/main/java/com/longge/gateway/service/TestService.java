@@ -8,7 +8,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerWebExchange;
 
-import com.longge.common.service.util.OkHttpUtils;
+import com.longge.common.util.OkHttpUtils;
 import com.longge.gateway.fegin.TestFegin;
 
 import lombok.extern.slf4j.Slf4j;
