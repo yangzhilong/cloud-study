@@ -992,121 +992,153 @@ public class RedisUtils {
         }
     
         /**
+         * 通过索引区间返回有序集合zset指定区间内的成员且带分数，分数从低到高
          * @param key
          * @param start 索引从0开始，包含start
          * @param end 索引从0开始，包含end， -1表示到末尾
          * @return
-         * @desc 通过索引区间返回有序集合zset指定区间内的成员且带分数，分数从低到高
          */
         public static Set<ZSetOperations.TypedTuple<String>> rangeByIndexWithScores(String key, long start, long end) {
             return redisTemplate.opsForZSet().rangeWithScores(key, start, end);
         }
     
         /**
+         * 通过索引区间返回有序集合zset指定区间内的成员，分数从高到低
          * @param key
          * @param start 索引从0开始，包含start
          * @param end 索引从0开始，包含end， -1表示到末尾
          * @return
-         * @desc 通过索引区间返回有序集合zset指定区间内的成员，分数从高到低
          */
         public static Set<String> reverseRangeByIndex(String key, long start, long end) {
             return redisTemplate.opsForZSet().reverseRange(key, start, end);
         }
     
         /**
+         * 通过索引区间返回有序集合zset指定区间内的成员且带分数，分数从高到低
          * @param key
          * @param start 索引从0开始，包含start
          * @param end 索引从0开始，包含end， -1表示到末尾
          * @return
-         * @desc 通过索引区间返回有序集合zset指定区间内的成员且带分数，分数从高到低
          */
         public static Set<ZSetOperations.TypedTuple<String>> reverseRangeByIndexWithscores(String key, long start, long end) {
             return redisTemplate.opsForZSet().reverseRangeWithScores(key, start, end);
         }
     
         /**
+         * 通过分数返回有序集合zset指定区间内的成员, 分数从低到高
          * @param key
          * @param min
          * @param max
          * @return
-         * @desc 通过分数返回有序集合zset指定区间内的成员, 分数从低到高
          */
         public static Set<String> rangeByScore(String key, double min, double max) {
             return redisTemplate.opsForZSet().rangeByScore(key, min, max);
         }
     
         /**
+         * 通过分数返回有序集合zset指定区间内的成员且带分数, 分数从低到高
          * @param key
          * @param min
          * @param max
          * @return
-         * @desc 通过分数返回有序集合zset指定区间内的成员且带分数, 分数从低到高
          */
         public static Set<ZSetOperations.TypedTuple<String>> rangeByScoreWithscores(String key, double min, double max) {
             return redisTemplate.opsForZSet().rangeByScoreWithScores(key, min, max);
         }
     
         /**
+         * 通过分数返回有序集合zset指定区间内的成员, 分数从高到低
          * @param key
          * @param min
          * @param max
          * @return
-         * @desc 通过分数返回有序集合zset指定区间内的成员, 分数从高到低
          */
         public static Set<String> reverseRangeByScore(String key, double min, double max) {
             return redisTemplate.opsForZSet().reverseRangeByScore(key, min, max);
         }
     
         /**
+         * 通过分数返回有序集合zset指定区间内的成员且带分数, 分数从高到低
          * @param key
          * @param min
          * @param max
          * @return
-         * @desc 通过分数返回有序集合zset指定区间内的成员且带分数, 分数从高到低
          */
         public static Set<ZSetOperations.TypedTuple<String>> reverseRangeByScoreWithscores(String key, double min, double max) {
             return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max);
         }
     
         /**
+         * 返回有序集合zset中指定成员的索引
          * @param key
          * @param value
          * @return
-         * @desc 返回有序集合zset中指定成员的索引
          */
         public static Long index(String key, Object value) {
             return redisTemplate.opsForZSet().rank(key, value);
         }
     
         /**
+         * 移除有序集合zset中的一个或多个成员，并返回移除成员的个数
          * @param key
          * @param values
-         * @desc 移除有序集合zset中的一个或多个成员，并返回移除成员的个数
          */
         public static Long remove(String key, Object... values) {
             return redisTemplate.opsForZSet().remove(key, values);
         }
     
         /**
+         * 移除有序集合zset给定的索引区间的所有成员，并返回移除成员的个数
          * @param key
          * @param start 索引从0开始，包含start
          * @param end 索引从0开始，包含end， -1表示到末尾
          * @return
-         * @desc 移除有序集合zset给定的索引区间的所有成员，并返回移除成员的个数
          */
         public static Long removeRangeByRank(String key, long start, long end) {
             return redisTemplate.opsForZSet().removeRange(key, start, end);
         }
     
         /**
+         * 移除有序集合zset给定的分数区间的所有成员，并返回移除成员的个数
          * @param key
          * @param min
          * @param max
          * @return
-         * @desc 移除有序集合zset给定的分数区间的所有成员，并返回移除成员的个数
          */
         public static Long removeRangeByScore(String key, double min, double max) {
             return redisTemplate.opsForZSet().removeRangeByScore(key, min, max);
+        }
+        
+        /**
+         * 返回元素的分数，如果元素不存在则返回null
+         * @param key
+         * @param member
+         * @return
+         */
+        public static Double score(String key, String member) {
+            return redisTemplate.opsForZSet().score(key, member);
+        }
+        
+        /**
+         * 将key和otherKey的数据合并(并集)到新的destKey里
+         * @param key
+         * @param otherKey
+         * @param destKey
+         * @return
+         */
+        public static Long unionAndStore(String key, String otherKey, String destKey) {
+            return redisTemplate.opsForZSet().unionAndStore(key, otherKey, destKey);
+        }
+        
+        /**
+         * 将key和otherKey的数据的交集存储到新的destKey里
+         * @param key
+         * @param otherKey
+         * @param destKey
+         * @return
+         */
+        public static Long intersectAndStore(String key, String otherKey, String destKey) {
+            return redisTemplate.opsForZSet().intersectAndStore(key, otherKey, destKey);
         }
     }
 }
