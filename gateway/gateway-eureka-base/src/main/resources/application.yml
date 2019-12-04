@@ -27,7 +27,7 @@ spring:
       load-on-startup: 1
   profiles:    active:    - local
   application:
-    name: gateway
+    name: gateway-eureka-base
   cloud:
     gateway:
       globalcors:        cors-configurations:          '[/**]': 
