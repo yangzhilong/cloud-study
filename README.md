@@ -7,7 +7,7 @@
 ```
 
 ## 项目模块：
-### cloud-parent：
+### dependency-parent：
 ```
  1、SpringBoot和SpringCloud的版本
  2、Plugin的版本
