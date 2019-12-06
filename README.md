@@ -47,6 +47,11 @@ Gateway的各种集成
 - producer-eureka-base
 端口：8200
 
+### elasticsearch
+#### elasticsearch-spring-data-rest
+- 使用spring-boot-starter-data-elasticsearch的restful api
+- 端口：8210
+
 ### consumer-service
 ```
 服务的消费者的多个版本

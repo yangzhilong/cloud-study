@@ -1,18 +1,18 @@
 server:
-  port: 8200
+  port: 8210
 eureka:
   client:
     # 从eureka拉取注册信息的频率，默认30
     registry-fetch-interval-seconds: 10
     # 如果是集群环境，client去获取eureka集群的node列表的频率
     # 默认值： 5 * MINUTES
-    eureka-service-url-poll-interval-seconds: 60
+    #eureka-service-url-poll-interval-seconds: 60
     serviceUrl:
       # 单机配置
-      #defaultZone: http://eureka:1234@localhost:8000/eureka/
+      defaultZone: http://eureka:1234@localhost:8000/eureka/
       # 集群配置
       # 可以只配置集群中部分eureka即可， eureka集群之间会进行同步
-      defaultZone: http://eureka:1234@localhost:8001/eureka/,http://eureka:1234@localhost:8002/eureka/
+      #defaultZone: http://eureka:1234@localhost:8001/eureka/,http://eureka:1234@localhost:8002/eureka/
   instance:
     # 多久没收到心跳可以认为是down了，默认是90，即默认3次心跳检测失败后
     lease-expiration-duration-in-seconds: 12
@@ -24,3 +24,7 @@ spring:
   application:
     name: elasticsearch-spring-data
   profiles:    active:    - local
+  data:    elasticsearch:
+      client:
+        reactive:
+          endpoints:          - localhost:9200
