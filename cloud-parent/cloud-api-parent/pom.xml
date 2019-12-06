@@ -15,6 +15,7 @@
 	   <dependency>
 	       <groupId>com.longge</groupId>
 	       <artifactId>api-common</artifactId>
+		   <version>${api-common.version}</version>
 	   </dependency>
 	   
 	   <dependency>

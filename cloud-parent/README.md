@@ -1,19 +1,12 @@
-#  cloud parent
-## 本POM主要维护：
+#  dependency parent
+- 管理公共依赖
 
-```
- 1、SpringBoot和SpringCloud的版本
- 2、Plugin的版本
- 3、Maven私服信息
- 4、一些jar的version属性定义
-```
-非业务组件的服务可以将此POM作为父POM进行依赖，例如： Eureka、Zipkin等
-
-##  下设3个子模块
-
-### 1、cloud-api-parent
+##  下设4个模块
+#### 1、cloud-parent
+    管理springboot/cloud版本，下面3个pom的依赖的版本，私服，插件等维护
+### 2、cloud-api-parent
 	所有的api项目必须以此POM作为父POM
-### 2、cloud-web-parent
+### 3、cloud-web-parent
 	所有业务SpringMVC Service必须以此POM作为父POM
-### 3、cloud-webflux-parent
+### 4、cloud-webflux-parent
 	所有业务SpringFlux Service必须以此POM作为父POM
