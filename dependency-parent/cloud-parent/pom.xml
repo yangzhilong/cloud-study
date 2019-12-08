@@ -82,7 +82,6 @@
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
-				<optional>true</optional>
 			</dependency>
 
 			<!-- fastjson -->

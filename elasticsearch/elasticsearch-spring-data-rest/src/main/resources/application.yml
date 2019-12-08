@@ -24,7 +24,7 @@ spring:
   application:
     name: elasticsearch-spring-data
   profiles:    active:    - local
-  data:    elasticsearch:
-      client:
-        reactive:
-          endpoints:          - localhost:9200
+  elasticsearch:
+    rest:
+      uris:
+      - http://192.168.56.101:9200
