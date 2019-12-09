@@ -1,13 +1,10 @@
  package com.longge.es.rest;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +23,7 @@ import com.longge.es.repository.UserRepository;
 
 /**
  * 使用springboot data for es 的Repository来操作ES
+ * 底层采用RestHighLevelClient通信
  * @author roger yang
  * @date 12/06/2019
  */
@@ -62,18 +60,6 @@ public class RepositoryRest {
     		return GlobalResponse.buildSuccess(BeanMapper.map(opt.get(), UserDto.class));
     	}
     	return GlobalResponse.buildFail("404", "no data");
-    }
-    
-    /**
-     * 条件查询
-     * @param dto
-     * @return
-     */
-    @GetMapping("/search")
-    public GlobalResponse<List<UserDto>> query(UserDto dto) {
-    	QueryBuilder query = null;
-    	userRepository.search(query);
-    	return GlobalResponse.buildSuccess(Collections.emptyList());
     }
 
     /**

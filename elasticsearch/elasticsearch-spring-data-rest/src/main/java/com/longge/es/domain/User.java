@@ -2,7 +2,9 @@
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,14 +16,16 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Document(indexName = "user", type="_doc")
+@Document(indexName = "user", type="_doc", createIndex=true)
 public class User implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 6586038811906245946L;
-    
+    @Id
     private Long id;
+    @Field
     private String username;
+    @Field
     private Integer age;
 }

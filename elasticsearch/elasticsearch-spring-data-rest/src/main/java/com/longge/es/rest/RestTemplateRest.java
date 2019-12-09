@@ -42,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 使用es 的rest api来操作ES
+ * 底层采用RestHighLevelClient
  * @author roger yang
  * @date 12/06/2019
  */
