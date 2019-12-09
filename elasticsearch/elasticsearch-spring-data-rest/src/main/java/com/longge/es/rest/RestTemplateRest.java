@@ -1,16 +1,24 @@
  package com.longge.es.rest;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.GetQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.data.elasticsearch.core.query.UpdateQueryBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,6 +79,41 @@ public class RestTemplateRest {
     		return GlobalResponse.buildSuccess(BeanMapper.map(user, UserDto.class));
     	}
     	return GlobalResponse.buildFail("404", "no data");
+    }
+    
+    /**
+     * 条件查询
+     * @param dto
+     * @return
+     */
+    @GetMapping("/search")
+    public GlobalResponse<List<UserDto>> query(UserDto dto) {
+    	Criteria criteria = Criteria.where("age").greaterThanEqual(dto.getAge());
+    	criteria.and("id").in(1, 2);
+    	
+    	CriteriaQuery query = new CriteriaQuery(criteria);
+    	List<User> list = elasticsearchRestTemplate.queryForList(query, User.class);
+    	if(CollectionUtils.isNotEmpty(list)) {
+    		return GlobalResponse.buildSuccess(BeanMapper.mapList(list, UserDto.class));
+    	}
+    	return GlobalResponse.buildSuccess(Collections.emptyList());
+    }
+    
+    /**
+     * 条件查询
+     * @param dto
+     * @return
+     */
+    @GetMapping("/search2")
+    public GlobalResponse<List<UserDto>> query2(UserDto dto) {
+    	IdsQueryBuilder qb = new IdsQueryBuilder();
+    	qb.addIds(String.valueOf(dto.getId()));
+    	SearchQuery query = new NativeSearchQuery(qb);
+    	List<User> list = elasticsearchRestTemplate.queryForList(query, User.class);
+    	if(CollectionUtils.isNotEmpty(list)) {
+    		return GlobalResponse.buildSuccess(BeanMapper.mapList(list, UserDto.class));
+    	}
+    	return GlobalResponse.buildSuccess(Collections.emptyList());
     }
     
     /**
