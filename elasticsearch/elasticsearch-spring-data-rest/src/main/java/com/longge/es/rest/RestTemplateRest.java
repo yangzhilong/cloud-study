@@ -1,5 +1,6 @@
  package com.longge.es.rest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +143,25 @@ public class RestTemplateRest {
     public GlobalResponse<Boolean> delete(@PathVariable("id") String id) {
     	String docId = this.elasticsearchRestTemplate.delete(User.class, id);
     	log.info("delete user doc id is:{}", docId);
+    	return GlobalResponse.buildSuccess(Boolean.TRUE);
+    }
+    
+    /**
+     * 一次请求包含多个操作
+     * @return
+     */
+    @PostMapping("/bulk")
+    public GlobalResponse<Boolean> bulk() {
+    	UpdateRequest updateRequest = new UpdateRequest();
+    	
+    	UpdateQuery uq1 = new UpdateQueryBuilder().withClass(User.class).withId("1").withUpdateRequest(updateRequest).build();
+    	UpdateQuery uq2 = new UpdateQueryBuilder().build();
+    	
+    	List<UpdateQuery> queries = new ArrayList<>(2);
+    	queries.add(uq1);
+    	queries.add(uq2);
+    	this.elasticsearchRestTemplate.bulkUpdate(queries);
+    	
     	return GlobalResponse.buildSuccess(Boolean.TRUE);
     }
 }

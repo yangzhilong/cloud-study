@@ -28,3 +28,4 @@ spring:
     rest:
       uris:
       - http://192.168.56.101:9200
+  data:    elasticsearch:      repositories:        enabled: true
