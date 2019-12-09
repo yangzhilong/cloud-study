@@ -101,7 +101,7 @@
 	</dependencyManagement>
 
 	<distributionManagement>
-		<repository>
+		<!-- <repository>
 			<id>nexus-releases</id>
 			<name>Nexus Release</name>
 			<url>http://10.92.32.52:8100/repository/maven-releases/</url>
@@ -110,7 +110,7 @@
 			<id>nexus-snapshots</id>
 			<name>Nexus Snapshot</name>
 			<url>http://10.92.32.52:8100/repository/maven-snapshots/</url>
-		</snapshotRepository>
+		</snapshotRepository> -->
 	</distributionManagement>
 
 	<build>
