@@ -1,7 +1,6 @@
  package com.longge.es.rest;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,9 +20,10 @@ import com.longge.es.domain.User;
 import com.longge.es.dto.UserDto;
 import com.longge.es.repository.UserRepository;
 
+import reactor.core.publisher.Mono;
+
 /**
  * 使用springboot data for es 的Repository来操作ES
- * 底层采用RestHighLevelClient通信
  * @author roger yang
  * @date 12/06/2019
  */
@@ -39,13 +39,13 @@ public class RepositoryRest {
      * @return
      */
     @PostMapping("/add")
-    public GlobalResponse<Long> add(@RequestBody @Valid UserDto dto) {
+    public Mono<GlobalResponse<Long>> add(@RequestBody @Valid UserDto dto) {
         User user = BeanMapper.map(dto, User.class);
         if(Objects.isNull(user.getId())) {
             user.setId(1L);
         }
-        user = userRepository.save(user);
-        return GlobalResponse.buildSuccess(user.getId());
+        user = userRepository.save(user).block();
+        return Mono.just(GlobalResponse.buildSuccess(user.getId()));
     }
     
     /**
@@ -54,12 +54,13 @@ public class RepositoryRest {
      * @return
      */
     @GetMapping("/get/{id}")
-    public GlobalResponse<UserDto> get(@PathVariable("id") Long id) {
-    	Optional<User> opt = userRepository.findById(id);
-    	if(opt.isPresent()) {
-    		return GlobalResponse.buildSuccess(BeanMapper.map(opt.get(), UserDto.class));
+    public Mono<GlobalResponse<UserDto>> get(@PathVariable("id") Long id) {
+    	Mono<User> opt = userRepository.findById(id);
+    	User user = opt.block();
+    	if(null != user) {
+    		return Mono.just(GlobalResponse.buildSuccess(BeanMapper.map(user, UserDto.class)));
     	}
-    	return GlobalResponse.buildFail("404", "no data");
+    	return Mono.just(GlobalResponse.buildFail("404", "no data"));
     }
 
     /**
@@ -69,9 +70,10 @@ public class RepositoryRest {
      * @return
      */
     @PutMapping("/update")
-    public GlobalResponse<Boolean> update(@RequestBody @Valid UserDto dto) {
-    	userRepository.save(BeanMapper.map(dto, User.class));
-    	return GlobalResponse.buildSuccess(Boolean.TRUE);
+    public Mono<GlobalResponse<Boolean>> update(@RequestBody @Valid UserDto dto) {
+    	Mono<User> opt = userRepository.save(BeanMapper.map(dto, User.class));
+    	opt.subscribe();
+    	return Mono.just(GlobalResponse.buildSuccess(Boolean.TRUE));
     }
     
     /**
@@ -80,8 +82,8 @@ public class RepositoryRest {
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public GlobalResponse<Boolean> delete(@PathVariable("id") Long id) {
-    	userRepository.deleteById(id);
-    	return GlobalResponse.buildSuccess(Boolean.TRUE);
+    public Mono<GlobalResponse<Boolean>> delete(@PathVariable("id") Long id) {
+    	userRepository.deleteById(id).block();
+    	return Mono.just(GlobalResponse.buildSuccess(Boolean.TRUE));
     }
 }

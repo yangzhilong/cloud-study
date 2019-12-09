@@ -10,6 +10,11 @@
 	</parent>
 	<artifactId>cloud-webflux-parent</artifactId>
 	<packaging>pom</packaging>
+	
+	<properties>
+		<!-- support webflux -->
+		<swagger.version>3.0.0-SNAPSHOT</swagger.version>
+	</properties>
 
 	<dependencies>
 	   <dependency>
@@ -49,6 +54,25 @@
 			<artifactId>dozer</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-spring-webflux</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- support webflux -->
+	<repositories>
+        <repository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </repository>
+    </repositories>
 
 	<build>
 		<plugins>

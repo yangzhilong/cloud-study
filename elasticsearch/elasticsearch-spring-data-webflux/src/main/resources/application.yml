@@ -1,5 +1,5 @@
 server:
-  port: 8210
+  port: 8220
 eureka:
   client:
     # 禁用eureka注册

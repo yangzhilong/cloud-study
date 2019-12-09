@@ -49,6 +49,21 @@ public final class BeanMapper {
         }
         return destinationList;
     }
+    
+    /**
+     * 基于Dozer转换Iterable中对象的类型.
+     */
+    public static <T> List<T> mapList(Iterable<?> sourceList, Class<T> destinationClass) {
+        if (sourceList == null) {
+        	return Collections.emptyList();
+        }
+        List<T> destinationList = new ArrayList<>();
+        for (Object sourceObject : sourceList) {
+            T destinationObject = dozer.map(sourceObject, destinationClass);
+            destinationList.add(destinationObject);
+        }
+        return destinationList;
+    }
 
     /**
      * 基于Dozer将对象A的值拷贝到对象B中.
