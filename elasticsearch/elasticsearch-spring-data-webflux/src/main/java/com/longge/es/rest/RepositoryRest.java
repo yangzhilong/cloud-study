@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.longge.common.dto.GlobalResponse;
 import com.longge.common.util.BeanMapper;
 import com.longge.es.domain.User;
 import com.longge.es.dto.UserDto;
@@ -39,13 +38,12 @@ public class RepositoryRest {
      * @return
      */
     @PostMapping("/add")
-    public Mono<GlobalResponse<Long>> add(@RequestBody @Valid UserDto dto) {
+    public Mono<User> add(@RequestBody @Valid UserDto dto) {
         User user = BeanMapper.map(dto, User.class);
         if(Objects.isNull(user.getId())) {
             user.setId(1L);
         }
-        user = userRepository.save(user).block();
-        return Mono.just(GlobalResponse.buildSuccess(user.getId()));
+        return userRepository.save(user);
     }
     
     /**
@@ -54,13 +52,8 @@ public class RepositoryRest {
      * @return
      */
     @GetMapping("/get/{id}")
-    public Mono<GlobalResponse<UserDto>> get(@PathVariable("id") Long id) {
-    	Mono<User> opt = userRepository.findById(id);
-    	User user = opt.block();
-    	if(null != user) {
-    		return Mono.just(GlobalResponse.buildSuccess(BeanMapper.map(user, UserDto.class)));
-    	}
-    	return Mono.just(GlobalResponse.buildFail("404", "no data"));
+    public Mono<User> get(@PathVariable("id") Long id) {
+    	return userRepository.findById(id);
     }
 
     /**
@@ -70,10 +63,8 @@ public class RepositoryRest {
      * @return
      */
     @PutMapping("/update")
-    public Mono<GlobalResponse<Boolean>> update(@RequestBody @Valid UserDto dto) {
-    	Mono<User> opt = userRepository.save(BeanMapper.map(dto, User.class));
-    	opt.subscribe();
-    	return Mono.just(GlobalResponse.buildSuccess(Boolean.TRUE));
+    public Mono<User> update(@RequestBody @Valid UserDto dto) {
+    	return userRepository.save(BeanMapper.map(dto, User.class));
     }
     
     /**
@@ -82,8 +73,7 @@ public class RepositoryRest {
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public Mono<GlobalResponse<Boolean>> delete(@PathVariable("id") Long id) {
-    	userRepository.deleteById(id).block();
-    	return Mono.just(GlobalResponse.buildSuccess(Boolean.TRUE));
+    public Mono<Void> delete(@PathVariable("id") Long id) {
+    	return userRepository.deleteById(id);
     }
 }

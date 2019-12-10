@@ -1,7 +1,5 @@
  package com.longge.es.rest;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -19,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.longge.common.dto.GlobalResponse;
 import com.longge.common.util.BeanMapper;
 import com.longge.es.domain.User;
 import com.longge.es.dto.UserDto;
 
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -35,7 +31,6 @@ import reactor.core.publisher.Mono;
  */
 @RestController
 @RequestMapping("/api/template")
-@Slf4j
 public class RestTemplateRest {
     @Autowired
     private ReactiveElasticsearchTemplate reactiveElasticsearchTemplate;
@@ -46,14 +41,12 @@ public class RestTemplateRest {
      * @return
      */
     @PostMapping("/add")
-    public Mono<GlobalResponse<Void>> add(@RequestBody @Valid UserDto dto) {
+    public Mono<User> add(@RequestBody @Valid UserDto dto) {
         User user = BeanMapper.map(dto, User.class);
         if(Objects.isNull(user.getId())) {
             user.setId(1L);
         }
-        Mono<User> result = reactiveElasticsearchTemplate.save(user);
-        result.subscribe();
-        return Mono.just(GlobalResponse.buildSuccess());
+        return reactiveElasticsearchTemplate.save(user);
     }
     
     /**
@@ -62,13 +55,8 @@ public class RestTemplateRest {
      * @return
      */
     @GetMapping("/get/{id}")
-    public Mono<GlobalResponse<UserDto>> get(@PathVariable("id") String id) {
-    	Mono<User> result = reactiveElasticsearchTemplate.findById(id, User.class);
-    	User user = result.block();
-    	if(null != user) {
-    		return Mono.just(GlobalResponse.buildSuccess(BeanMapper.map(user, UserDto.class)));
-    	}
-    	return Mono.just(GlobalResponse.buildFail("404", "no data"));
+    public Mono<User> get(@PathVariable("id") String id) {
+    	return reactiveElasticsearchTemplate.findById(id, User.class);
     }
     
     /**
@@ -77,17 +65,13 @@ public class RestTemplateRest {
      * @return
      */
     @GetMapping("/search")
-    public Mono<GlobalResponse<List<UserDto>>> query(UserDto dto) {
+    public Flux<User> query(UserDto dto) {
     	Criteria criteria = Criteria.where("age").greaterThanEqual(dto.getAge());
     	criteria.and("id").in(1, 2);
     	
     	CriteriaQuery query = new CriteriaQuery(criteria);
     	
-    	Flux<User> list = reactiveElasticsearchTemplate.find(query, User.class);
-    	if(list.hasElements().block()) {
-    		return Mono.just(GlobalResponse.buildSuccess(BeanMapper.mapList(list.toIterable(), UserDto.class)));
-    	}
-    	return Mono.just(GlobalResponse.buildSuccess(Collections.emptyList()));
+    	return reactiveElasticsearchTemplate.find(query, User.class);
     }
     
     /**
@@ -97,11 +81,9 @@ public class RestTemplateRest {
      * @return
      */
     @PutMapping("/update")
-    public GlobalResponse<Boolean> update(@RequestBody @Valid UserDto dto) {
+    public Mono<User> update(@RequestBody @Valid UserDto dto) {
     	User user = BeanMapper.map(dto, User.class);
-    	Mono<User> result = reactiveElasticsearchTemplate.save(user);
-    	result.subscribe();
-    	return GlobalResponse.buildSuccess(Boolean.TRUE);
+    	return reactiveElasticsearchTemplate.save(user);
     }
     
     /**
@@ -110,9 +92,7 @@ public class RestTemplateRest {
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public GlobalResponse<Boolean> delete(@PathVariable("id") String id) {
-    	Mono<String> result = this.reactiveElasticsearchTemplate.deleteById(id, User.class);
-    	log.info("delete user doc id is:{}", result.block());
-    	return GlobalResponse.buildSuccess(Boolean.TRUE);
+    public Mono<String> delete(@PathVariable("id") String id) {
+    	return this.reactiveElasticsearchTemplate.deleteById(id, User.class);
     }
 }
