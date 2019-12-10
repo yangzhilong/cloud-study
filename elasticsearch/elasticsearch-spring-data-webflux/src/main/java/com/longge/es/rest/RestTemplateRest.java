@@ -67,8 +67,8 @@ public class RestTemplateRest {
     @GetMapping("/search")
     public Flux<User> query(UserDto dto) {
     	Criteria criteria = Criteria.where("age").greaterThanEqual(dto.getAge());
-    	criteria.and("id").in(1, 2);
-    	
+    	criteria.and(Criteria.where("id").notIn(1, 2));
+    	criteria.and(Criteria.where("username").startsWith(dto.getUsername()));
     	CriteriaQuery query = new CriteriaQuery(criteria);
     	
     	return reactiveElasticsearchTemplate.find(query, User.class);

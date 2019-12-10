@@ -3,7 +3,7 @@ server:
 eureka:
   client:
     # 禁用eureka注册
-    enabled: true
+    enabled: false
     # 从eureka拉取注册信息的频率，默认30
     registry-fetch-interval-seconds: 10
     # 如果是集群环境，client去获取eureka集群的node列表的频率
@@ -27,7 +27,8 @@ spring:
     name: elasticsearch-spring-webflux
   profiles:    active: local
   data:    elasticsearch:
-      client:        reactive:          endpoints:          - http://192.168.56.101:9200
+      client:        reactive:
+          endpoints: 192.168.56.101:9200
       repositories:        enabled: true
 management:
   endpoints:
