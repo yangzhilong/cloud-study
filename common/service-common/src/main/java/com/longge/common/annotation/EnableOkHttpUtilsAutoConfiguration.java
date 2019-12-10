@@ -14,10 +14,10 @@ import com.longge.common.configuration.OkHttpUtilsConfiguration;
  * @author roger yang
  * @date 9/16/2019
  */
- @Target(ElementType.TYPE)
- @Retention(RetentionPolicy.RUNTIME)
- @Documented
- @Import(OkHttpUtilsConfiguration.class)
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(OkHttpUtilsConfiguration.class)
 public @interface EnableOkHttpUtilsAutoConfiguration {
 
 }
