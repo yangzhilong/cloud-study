@@ -1,8 +1,8 @@
 # 我的SpingCloud学习笔记
 ## 版本
 ```
-	SpringBoot:	2.1.5.RELEASE
-	SpringCloud: Greenwich.SR1
+	SpringBoot:	2.2.1.RELEASE
+	SpringCloud: Hoxton.RELEASE
 	SpringCloud-Alibaba: 2.1.0.RELEASE
 ```
 
