@@ -6,5 +6,5 @@
 ### kafka+mysql方式
 参考脚本： start-local-kafka-mysql
 
-### kafka+es方式
-研究中
+### es方式
+参考脚本：start-local-es
