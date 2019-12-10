@@ -42,7 +42,7 @@ public final class BeanMapper {
         if (sourceList == null) {
         	return Collections.emptyList();
         }
-        List<T> destinationList = new ArrayList<>();
+        List<T> destinationList = new ArrayList<>(sourceList.size());
         for (Object sourceObject : sourceList) {
             T destinationObject = dozer.map(sourceObject, destinationClass);
             destinationList.add(destinationObject);
